@@ -1,0 +1,11 @@
+h1 {
+    font-size: 1.8rem;
+}
+.text-center {
+    text-align: center;
+}
+.title-icon {
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 2rem;
+}
