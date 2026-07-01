@@ -43,15 +43,16 @@ services:
       dockerfile: docker/vite/Dockerfile
     volumes:
       - ./:/app
-      - /app/node_modules
+      - node_modules:/app/node_modules
     ports:
       - "5173:5173"
 
   mailhog:
     image: mailhog/mailhog
     ports:
-      - "8025:8025" # Interface Web
-      - "1025:1025" # SMTP
+      - "8025:8025"
+      - "1025:1025"
 
 volumes:
   pgdata:
+  node_modules:

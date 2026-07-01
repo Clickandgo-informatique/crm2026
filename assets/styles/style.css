@@ -1,0 +1,13 @@
+html{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.page-title{
+  font-size: 2rem;
+  color : blue;
+  padding: 5px 10px;
+  border-radius: 99px;
+  text-align: center;
+  width: fit-content;
+  margin: 10px auto;
+  border:1px solid lightgray;
+}

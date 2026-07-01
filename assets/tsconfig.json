@@ -19,5 +19,10 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+
+  "include": [
+    "./",
+    "types",
+    "../node_modules"
+  ]
 }

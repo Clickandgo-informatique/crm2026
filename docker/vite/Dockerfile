@@ -1,9 +1,11 @@
-FROM node:20
+FROM node:22
 
 WORKDIR /app
 
-# Installer les dépendances JS
+# Copier uniquement package.json pour installer les deps
 COPY package.json ./
+
+# Installer les dépendances dans Docker
 RUN npm install
 
 # Copier le reste du projet
