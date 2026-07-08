@@ -1,0 +1,142 @@
+.planning-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.planning-sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 5px;
+}
+
+.mini-calendar-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    gap: 10px;
+    background: rgb(242, 242, 242);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px auto;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
+    height: fit-content;
+    justify-content: center;
+}
+
+.mini-calendar-wrapper .btn {
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    outline: none;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+.month-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.active-month-label {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: capitalize;
+    padding: 8px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    justify-items: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.calendar-day-cell {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: ease-in-out 0.35s;
+}
+.calendar-day-label {
+    color: darkblue;
+    font-size: 0.95rem;
+}
+
+.current-day {
+    background: darkblue;
+    color: white;
+    font-weight: 900;
+    border-radius: 50%;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
+}
+.calendar-day-cell:hover {
+    background: darkblue;
+    color: white;
+    font-weight: 900;
+    border-radius: 50%;
+    transform: scale(1.2);
+}
+.other-month {
+    color: darkgray;
+}
+.btn.btn-today {
+    font-size: 0.8rem;
+    display: flex;
+    width: 100%;
+    margin: 5px auto;
+    text-transform: capitalize;
+}
+.btn:hover {
+    background: darkblue;
+    color: white;
+}
+
+.weekly-calendar-wrapper {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid darkblue;
+    overflow-x: scroll;
+    background: white;
+    min-height: 100vh;
+}
+.day-column {
+    border-left: 1px solid #ddd;
+}
+.day-label {
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    text-transform: capitalize;
+    border-bottom: 1px solid #ddd;
+    background: darkblue;
+    color:#ffff;
+}
+.calendar-day-cell.selected-week {
+    background-color: rgba(0, 120, 255, 0.08);
+}
+.selected-week-label {
+    /* margin-top: 8px;
+    padding: 6px; */
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: darkblue;
+}

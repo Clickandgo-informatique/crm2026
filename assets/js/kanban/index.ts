@@ -15,5 +15,4 @@ document.addEventListener("DOMContentLoaded", () => {
     if (kanbanGrid instanceof HTMLElement) {
         initBoardPage(kanbanGrid);
     }
-
 });

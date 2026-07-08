@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Planning{% endblock %}
+{% block title %}Planning
+{% endblock %}
 
 {% block body %}
-
+	<div class="planning-wrapper">
+		{% include "planning/_mini-calendar.html.twig" %}
+		{% include "planning/_weekly-calendar.html.twig" %}
+	</div>
 {% endblock %}
