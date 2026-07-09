@@ -3,6 +3,8 @@
 @import "./typography.css";
 @import "./kanban.css";
 @import "./planning.css";
+@import "./button.css";
+@import "./weekly-calendar.css";
 
 * {
     margin: 0;

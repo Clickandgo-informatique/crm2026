@@ -1,0 +1,13 @@
+button,
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    padding: 5px 10px;    
+    background: #ffff;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 35px;
+}

@@ -1,4 +1,4 @@
-import { 
+import {
     formatDate,
     formatWeekRange,
     getFirstMondayOfCalendar,
@@ -13,14 +13,15 @@ let btnNextMonth: HTMLElement | null = null;
 let btnPrevMonth: HTMLElement | null = null;
 let btnToday: HTMLElement | null = null;
 
-// Mois affiché dans le mini calendrier
-let currentDate = new Date();
+// Mois actuellement affiché dans le mini calendrier
+let currentMonth = new Date();
 
 // Date sélectionnée par l'utilisateur
 let selectedDate = new Date();
 
 // Date réelle du jour
 const today = new Date();
+today.setHours(0, 0, 0, 0);
 
 export function initMiniCalendar(root: HTMLElement): void
 {
@@ -29,8 +30,8 @@ export function initMiniCalendar(root: HTMLElement): void
     selectedWeekLabel = root.querySelector<HTMLElement>('.selected-week-label');
 
     btnToday = root.querySelector<HTMLElement>('.btn-today');
-    btnNextMonth = root.querySelector<HTMLElement>('.btnNextMonth');
-    btnPrevMonth = root.querySelector<HTMLElement>('.btnPrevMonth');
+    btnNextMonth = root.querySelector<HTMLElement>('.btn-next-month');
+    btnPrevMonth = root.querySelector<HTMLElement>('.btn-previous-month');
 
     if (!activeMonthLabel || !calendarGrid) {
         console.error('Éléments du mini calendrier introuvables');
@@ -72,7 +73,7 @@ function displayMonthLabel(): void
         return;
     }
 
-    activeMonthLabel.textContent = currentDate.toLocaleDateString('fr-FR', {
+    activeMonthLabel.textContent = currentMonth.toLocaleDateString('fr-FR', {
         month: 'long',
         year: 'numeric'
     });
@@ -89,16 +90,16 @@ function displaySelectedWeek(): void
 
 function nextMonth(): void
 {
-    currentDate.setDate(1);
-    currentDate.setMonth(currentDate.getMonth() + 1);
+    currentMonth.setDate(1);
+    currentMonth.setMonth(currentMonth.getMonth() + 1);
 
     renderCalendar();
 }
 
 function previousMonth(): void
 {
-    currentDate.setDate(1);
-    currentDate.setMonth(currentDate.getMonth() - 1);
+    currentMonth.setDate(1);
+    currentMonth.setMonth(currentMonth.getMonth() - 1);
 
     renderCalendar();
 }
@@ -113,6 +114,7 @@ function createGrid(): void
 
     grid.innerHTML = '';
 
+    // Création des entêtes des jours de la semaine
     const dayLabels = [
         'Lun',
         'Mar',
@@ -124,6 +126,7 @@ function createGrid(): void
     ];
 
     dayLabels.forEach(label => {
+
         const day = document.createElement('span');
 
         day.classList.add('calendar-day-label');
@@ -132,62 +135,63 @@ function createGrid(): void
         grid.append(day);
     });
 
-    let dayDate = getFirstMondayOfCalendar(currentDate);
+    // Récupération du premier lundi affiché dans la grille
+    let dayDate = getFirstMondayOfCalendar(currentMonth);
 
+    // Création des 42 cellules du calendrier
     for (let i = 0; i < 42; i++) {
 
         const cellDate = new Date(dayDate);
-
         const day = document.createElement('span');
 
         day.classList.add('calendar-day-cell');
-
         day.textContent = cellDate.getDate().toString();
-
         day.dataset.date = formatDate(cellDate);
 
-        if (isSameWeek(cellDate, selectedDate) && cellDate.getTime() !== selectedDate.getTime()) {
-            day.classList.add('selected-week');
+        // Surligne les autres jours appartenant à la semaine sélectionnée
+        if (
+            isSameWeek(cellDate, selectedDate)
+            &&
+            formatDate(cellDate) !== formatDate(selectedDate)
+        ) {
+            day.classList.add('in-selected-week');
         }
 
-        if (
-            cellDate.getDate() === selectedDate.getDate()
-            &&
-            cellDate.getMonth() === selectedDate.getMonth()
-            &&
-            cellDate.getFullYear() === selectedDate.getFullYear()
-        ) {
+        // Surligne le jour choisi par l'utilisateur
+        if (formatDate(cellDate) === formatDate(selectedDate)) {
             day.classList.add('selected-day');
         }
 
-        if (
-            cellDate.getDate() === today.getDate()
-            &&
-            cellDate.getMonth() === today.getMonth()
-            &&
-            cellDate.getFullYear() === today.getFullYear()
-        ) {
+        // Surligne la date du jour
+        if (formatDate(cellDate) === formatDate(today)) {
             day.classList.add('current-day');
         }
 
+        // Grise les jours n'appartenant pas au mois affiché
         if (
-            cellDate.getMonth() !== currentDate.getMonth()
+            cellDate.getMonth() !== currentMonth.getMonth()
             ||
-            cellDate.getFullYear() !== currentDate.getFullYear()
+            cellDate.getFullYear() !== currentMonth.getFullYear()
         ) {
             day.classList.add('other-month');
         }
 
         day.addEventListener('click', () => {
 
+            // Met à jour la date sélectionnée
             selectedDate = new Date(cellDate);
-            currentDate = new Date(cellDate);
+
+            // Affiche automatiquement le mois correspondant
+            currentMonth = new Date(cellDate);
 
             renderCalendar();
 
+            // Informe le calendrier hebdomadaire de la nouvelle sélection
             document.dispatchEvent(
                 new CustomEvent('dateSelected', {
-                    detail: selectedDate
+                    detail: {
+                        date: selectedDate
+                    }
                 })
             );
         });
@@ -200,14 +204,18 @@ function createGrid(): void
 
 function goToToday(): void
 {
+    // Sélectionne la date actuelle
     selectedDate = new Date(today);
-    currentDate = new Date(today);
+    currentMonth = new Date(today);
 
     renderCalendar();
 
+    // Informe le calendrier hebdomadaire du retour à aujourd'hui
     document.dispatchEvent(
         new CustomEvent('dateSelected', {
-            detail: selectedDate
+            detail: {
+                date: selectedDate
+            }
         })
-    );
+    );    
 }

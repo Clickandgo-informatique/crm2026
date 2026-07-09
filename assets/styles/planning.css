@@ -3,6 +3,8 @@
     grid-template-columns: 1fr 7fr;
     flex-wrap: wrap;
     gap: 5px;
+    background: rgb(241, 241, 241);
+    animation: fade-in;
 }
 
 .planning-sidebar {
@@ -11,7 +13,6 @@
     align-items: flex-start;
     margin: 5px;
 }
-
 .mini-calendar-wrapper {
     display: flex;
     flex-direction: column;
@@ -24,22 +25,6 @@
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
     height: fit-content;
     justify-content: center;
-}
-
-.mini-calendar-wrapper .btn {
-    box-sizing: border-box;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border-radius: 10px;
-    border: 1px solid lightgray;
-    outline: none;
-    cursor: pointer;
-    font-size: 2rem;
 }
 
 .month-selector {
@@ -63,6 +48,9 @@
     justify-items: center;
     align-items: center;
     gap: 4px;
+    background: #ffff;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .calendar-day-cell {
@@ -77,7 +65,7 @@
 }
 .calendar-day-label {
     color: darkblue;
-    font-size: 0.95rem;
+    font-size: 0.7rem;
 }
 
 .current-day {
@@ -108,27 +96,6 @@
     background: darkblue;
     color: white;
 }
-
-.weekly-calendar-wrapper {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    border: 1px solid darkblue;
-    overflow-x: scroll;
-    background: white;
-    min-height: 100vh;
-}
-.day-column {
-    border-left: 1px solid #ddd;
-}
-.day-label {
-    text-align: center;
-    padding: 8px;
-    font-weight: bold;
-    text-transform: capitalize;
-    border-bottom: 1px solid #ddd;
-    background: darkblue;
-    color:#ffff;
-}
 .calendar-day-cell.selected-week {
     background-color: rgba(0, 120, 255, 0.08);
 }
@@ -139,4 +106,26 @@
     font-size: 0.85rem;
     font-weight: 500;
     color: darkblue;
+}
+.weekly-calendar-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.week-selector-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+    margin: 10px;
+    gap: 10px;
+    color: darkblue;  
+}
+.time-column {
+    text-align: right;
+    align-items: center;
+    color: rgb(137, 137, 137);
+    font-size: 0.7rem;
+    background: transparent;
+    margin-right: 5px;
 }
