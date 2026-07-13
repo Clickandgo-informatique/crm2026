@@ -1,0 +1,89 @@
+.calendar-grid {
+    flex: 1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 70px repeat(var(--calendar-days), minmax(120px, 1fr));
+    width: 100%;
+    overflow-x: auto;
+    column-gap: 2px;
+    animation: fadeIn 2s ease;
+    --planning-zoom: 1;
+}
+
+.time-column,
+.planning-day-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.planning-day-column {
+    position: relative;
+}
+
+.hours-label-header,
+.planning-day-label {
+    height: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.day-column-header {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    line-height: 1.2;
+    overflow: hidden;
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    color: darkblue;
+    border-radius: 10px 10px 0 0;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;   
+}
+.day-column-header .current-day{
+    background:red;
+}
+
+.time-column {
+    text-align: right;
+    align-items: center;
+    color: rgb(137, 137, 137);
+    font-size: 0.7rem;
+    background: transparent;
+    margin-right: 5px;
+}
+
+.time-slot,
+.time-label {
+    height: calc(60px * var(--planning-zoom));
+    min-height: calc(60px * var(--planning-zoom));
+    box-sizing: border-box;
+    transition: height 0.15s ease;
+}
+
+.time-label {
+    padding-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid #ddd;
+}
+
+.hours-label-header {
+    border-bottom: 1px solid #ddd;
+}
+
+.time-slot {
+    border: 1px solid #ddd;
+    background: #ffffff;
+    border-radius: 5px;
+}
+.header-day-name{
+    padding: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}

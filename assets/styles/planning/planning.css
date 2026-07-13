@@ -1,0 +1,58 @@
+@import "./calendar-grid.css";
+@import "./calendar-header.css";
+@import "./calendar-selection.css";
+@import "./calendar-events.css";
+@import "./calendar-zoom.css";
+@import "./mini-calendar.css";
+@import "./views/week-view.css";
+
+.planning-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    gap: 5px;
+    background: rgb(241, 241, 241);
+    margin-bottom: 25px;
+}
+.planning-main{
+    background: #f9f7f7;
+}
+.planning-sidebar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 5px;
+}
+.btn.view-switch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    min-width: 80px;
+    padding: 3px 7px;
+}
+
+.view-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+.view-switcher {
+    display: flex;
+    width: fit-content;
+    padding: 5px;
+    gap: 5px;
+    margin: 5px auto;
+}
+.btn.view-switch-btn-active {
+    background: darkblue;
+    color:#fff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

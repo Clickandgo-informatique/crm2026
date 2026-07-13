@@ -1,0 +1,69 @@
+{% if events is empty %}
+
+	<div class="event-list-empty">
+		Aucun événement n'est enregistré pour ce jour
+	</div>
+
+{% else %}
+
+	{% for event in events %}
+
+		<article class="event-list-item event-type-{{ event.type.color() }}">
+
+			<div class="event-list-time">
+				<span>
+					{{ event.startAt|date('H:i') }}
+				</span>
+
+				{# <span>
+					-
+				</span> #}
+
+				<span>
+					{{ event.endAt|date('H:i') }}
+				</span>
+			</div>
+
+			<div class="event-list-content">
+
+				<div class="event-list-type">
+
+					<i class="fa-solid {{ event.type.icon() }}"></i>
+
+					<span>
+						{{ event.type.label() }}
+					</span>
+
+				</div>
+				<h4 class="event-list-title">
+					{{ event.title }}
+				</h4>
+
+
+				{% if event.dossier %}
+					<div class="event-list-relation">
+						<i class="fa-solid fa-folder"></i>
+						<span>
+							Dossier :
+							{{ event.dossier }}
+						</span>
+					</div>
+				{% endif %}
+
+				{% if event.customer is defined and event.customer %}
+					<div class="event-list-relation">
+						<i class="fa-solid fa-user"></i>
+						<span>
+							Client :
+							{{ event.customer }}
+						</span>
+					</div>
+				{% endif %}
+
+			</div>
+
+		</article>
+
+	{% endfor %}
+
+{% endif %}

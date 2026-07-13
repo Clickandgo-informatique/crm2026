@@ -1,0 +1,24 @@
+.calendar-zoom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50px;
+    height: 100%;
+    gap: 10px;
+    padding-top: 60px;
+}
+
+.calendar-zoom label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.8rem;
+}
+
+.calendar-zoom input[type="range"] {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    height: 250px;
+    width: 8px;
+    cursor: pointer;
+}

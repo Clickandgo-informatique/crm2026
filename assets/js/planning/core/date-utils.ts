@@ -1,3 +1,6 @@
+// Date sélectionnée par l'utilisateur dans le planning
+let selectedDate = new Date();
+
 // Retourne une date au format YYYY-MM-DD (sans problème de fuseau horaire)
 export function formatDate(date: Date): string
 {
@@ -6,6 +9,23 @@ export function formatDate(date: Date): string
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+}
+
+//Transforme une date en format long
+export function formatLongDate(
+    date: Date
+): string {
+
+    return date.toLocaleDateString(
+        'fr-FR',
+        {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        }
+    );
+
 }
 
 // Recherche du lundi de départ du calendrier
@@ -54,6 +74,7 @@ export function getWeekRange(date: Date): { monday: Date, sunday: Date }
     const monday = getMondayOfWeek(date);
 
     const sunday = new Date(monday);
+
     sunday.setDate(sunday.getDate() + 6);
 
     return {
@@ -78,6 +99,7 @@ export function formatWeekRange(date: Date): string
         year: 'numeric'
     })}`;
 }
+
 // Retourne le numéro ISO de la semaine
 export function getWeekNumber(date: Date): number
 {
@@ -86,13 +108,31 @@ export function getWeekNumber(date: Date): number
     target.setHours(0, 0, 0, 0);
 
     // Jeudi de la semaine courante
-    target.setDate(target.getDate() + 3 - ((target.getDay() + 6) % 7));
+    target.setDate(
+        target.getDate() + 3 - ((target.getDay() + 6) % 7)
+    );
 
-    const firstThursday = new Date(target.getFullYear(), 0, 4);
+    const firstThursday = new Date(
+        target.getFullYear(),
+        0,
+        4
+    );
 
     return 1 + Math.round(
         (
             target.getTime() - firstThursday.getTime()
         ) / 604800000
     );
+}
+
+// Retourne la date sélectionnée actuellement
+export function getSelectedDate(): Date
+{
+    return new Date(selectedDate);
+}
+
+// Met à jour la date sélectionnée
+export function setSelectedDate(date: Date): void
+{
+    selectedDate = new Date(date);
 }

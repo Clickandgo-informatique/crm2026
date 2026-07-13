@@ -1,0 +1,29 @@
+<div class="day-view-wrapper">
+
+	<div class="calendar-header">
+
+		<div class="calendar-navigation">
+
+			<button id="previous-day" class="btn btn-previous">
+				&#x2039;
+			</button>
+
+			<span id="day-label"></span>
+
+			<button id="next-day" class="btn btn-next">
+				&#x203A;
+			</button>
+
+		</div>
+
+	</div>
+
+	<div class="day-view-content">
+
+		<div class="calendar-grid"></div>
+
+		{% include "planning/_calendar-zoom.html.twig" %}
+
+	</div>
+
+</div>

@@ -1,0 +1,18 @@
+.selected-column {
+    animation: fadeIn 0.5s ease;
+    border: 1px solid blue;
+    border-radius: 10px;
+    background: darkgray;
+}
+
+.selected-column .planning-day-label {
+    background: darkgray;
+}
+
+.selected-column .time-slot {
+    background: rgb(248, 255, 235);
+}
+.selected-column .header-day-number{
+    background:darkblue;
+    color:white;
+}

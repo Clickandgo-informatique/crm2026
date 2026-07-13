@@ -4,8 +4,21 @@
 {% endblock %}
 
 {% block body %}
+
 	<div class="planning-wrapper">
-		{% include "planning/_mini-calendar.html.twig" %}
-		{% include "planning/_weekly-calendar.html.twig" %}
+
+		<aside class="planning-sidebar">
+
+			{% include "planning/_mini-calendar.html.twig" %}
+
+		</aside>
+
+		<main class="planning-main">
+			<div id="planning-view-switcher">
+				{% include "planning/_view-switcher.html.twig" %}
+			</div>
+			<div id="planning-view-container"></div>
+		</main>
 	</div>
+
 {% endblock %}

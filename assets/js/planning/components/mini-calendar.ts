@@ -2,8 +2,9 @@ import {
     formatDate,
     formatWeekRange,
     getFirstMondayOfCalendar,
-    isSameWeek
-} from "./date-functions";
+    isSameWeek,
+    setSelectedDate
+} from "../core/date-utils.ts"
 
 let activeMonthLabel: HTMLElement | null = null;
 let calendarGrid: HTMLElement | null = null;
@@ -26,7 +27,7 @@ today.setHours(0, 0, 0, 0);
 export function initMiniCalendar(root: HTMLElement): void
 {
     activeMonthLabel = root.querySelector<HTMLElement>('.active-month-label');
-    calendarGrid = root.querySelector<HTMLElement>('.calendar-grid');
+    calendarGrid = root.querySelector<HTMLElement>('.mini-calendar-grid');
     selectedWeekLabel = root.querySelector<HTMLElement>('.selected-week-label');
 
     btnToday = root.querySelector<HTMLElement>('.btn-today');
@@ -41,6 +42,8 @@ export function initMiniCalendar(root: HTMLElement): void
     btnNextMonth?.addEventListener('click', nextMonth);
     btnPrevMonth?.addEventListener('click', previousMonth);
     btnToday?.addEventListener('click', goToToday);
+
+    setSelectedDate(selectedDate);
 
     renderCalendar();
 }
@@ -180,6 +183,7 @@ function createGrid(): void
 
             // Met à jour la date sélectionnée
             selectedDate = new Date(cellDate);
+            setSelectedDate(selectedDate);
 
             // Affiche automatiquement le mois correspondant
             currentMonth = new Date(cellDate);
@@ -208,6 +212,8 @@ function goToToday(): void
     selectedDate = new Date(today);
     currentMonth = new Date(today);
 
+    setSelectedDate(selectedDate);
+
     renderCalendar();
 
     // Informe le calendrier hebdomadaire du retour à aujourd'hui
@@ -217,5 +223,5 @@ function goToToday(): void
                 date: selectedDate
             }
         })
-    );    
+    );
 }

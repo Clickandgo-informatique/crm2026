@@ -1,0 +1,10 @@
+.week-view-wrapper {
+    width: 100%;
+}
+.week-view-content {
+    display: grid;
+   grid-template-columns: 1fr 50px;   
+    width: 100%;
+    gap: 10px;
+    align-items: stretch;
+}

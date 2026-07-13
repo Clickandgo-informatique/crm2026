@@ -1,18 +1,3 @@
-.planning-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 7fr;
-    flex-wrap: wrap;
-    gap: 5px;
-    background: rgb(241, 241, 241);
-    animation: fade-in;
-}
-
-.planning-sidebar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 5px;
-}
 .mini-calendar-wrapper {
     display: flex;
     flex-direction: column;
@@ -42,13 +27,13 @@
     padding: 8px;
 }
 
-.calendar-grid {
+.mini-calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 32px);
     justify-items: center;
     align-items: center;
     gap: 4px;
-    background: #ffff;
+    background: #ffffff;
     border-radius: 5px;
     padding: 5px;
 }
@@ -63,6 +48,7 @@
     cursor: pointer;
     transition: ease-in-out 0.35s;
 }
+
 .calendar-day-label {
     color: darkblue;
     font-size: 0.7rem;
@@ -75,6 +61,7 @@
     border-radius: 50%;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
 }
+
 .calendar-day-cell:hover {
     background: darkblue;
     color: white;
@@ -82,9 +69,11 @@
     border-radius: 50%;
     transform: scale(1.2);
 }
+
 .other-month {
     color: darkgray;
 }
+
 .btn.btn-today {
     font-size: 0.8rem;
     display: flex;
@@ -92,40 +81,31 @@
     margin: 5px auto;
     text-transform: capitalize;
 }
+
 .btn:hover {
     background: darkblue;
     color: white;
 }
+
 .calendar-day-cell.selected-week {
     background-color: rgba(0, 120, 255, 0.08);
 }
+
 .selected-week-label {
-    /* margin-top: 8px;
-    padding: 6px; */
     text-align: center;
     font-size: 0.85rem;
     font-weight: 500;
     color: darkblue;
 }
-.weekly-calendar-header {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.week-selector-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: fit-content;
-    margin: 10px;
-    gap: 10px;
-    color: darkblue;  
-}
-.time-column {
-    text-align: right;
-    align-items: center;
-    color: rgb(137, 137, 137);
-    font-size: 0.7rem;
-    background: transparent;
-    margin-right: 5px;
+.selected-day,.selected-column {
+    background: #f2f2f2;
+    border-radius: 8px;
+    border: 2px solid blue;
+    font-weight: bold;
+    color: darkblue;
+
+    box-shadow:
+        inset 2px 2px 5px rgba(0, 0, 0, 0.25),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.8),
+        0 0 6px rgba(0, 0, 0, 0.6);
 }
