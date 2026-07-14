@@ -14,6 +14,8 @@ let btnNextMonth: HTMLElement | null = null;
 let btnPrevMonth: HTMLElement | null = null;
 let btnToday: HTMLElement | null = null;
 
+let initialized = false;
+
 // Mois actuellement affiché dans le mini calendrier
 let currentMonth = new Date();
 
@@ -26,6 +28,12 @@ today.setHours(0, 0, 0, 0);
 
 export function initMiniCalendar(root: HTMLElement): void
 {
+    if (initialized) {
+        return;
+    }
+
+    initialized = true;
+    
     activeMonthLabel = root.querySelector<HTMLElement>('.active-month-label');
     calendarGrid = root.querySelector<HTMLElement>('.mini-calendar-grid');
     selectedWeekLabel = root.querySelector<HTMLElement>('.selected-week-label');

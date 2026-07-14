@@ -18,22 +18,10 @@ class CalendarEventRepository extends ServiceEntityRepository
     }
 
 
-    public function findForDay(
-        \DateTimeImmutable $date
+    public function findForPeriod(
+        \DateTimeImmutable $start,
+        \DateTimeImmutable $end
     ): array {
-
-        $start =
-            $date->setTime(
-                0,
-                0
-            );
-
-        $end =
-            $start->modify(
-                '+1 day'
-            );
-
-
         return $this->createQueryBuilder('event')
             ->andWhere(
                 'event.startAt >= :start'
@@ -55,5 +43,64 @@ class CalendarEventRepository extends ServiceEntityRepository
             )
             ->getQuery()
             ->getResult();
+    }
+
+
+    public function findForDay(
+        \DateTimeImmutable $date
+    ): array {
+        $start = $date->setTime(
+            0,
+            0
+        );
+
+        $end = $start->modify(
+            '+1 day'
+        );
+
+        return $this->findForPeriod(
+            $start,
+            $end
+        );
+    }
+
+
+    public function findForThreeDays(
+        \DateTimeImmutable $date
+    ): array {
+        $start = $date->setTime(
+            0,
+            0
+        );
+
+        $end = $start->modify(
+            '+3 days'
+        );
+
+        return $this->findForPeriod(
+            $start,
+            $end
+        );
+    }
+
+
+    public function findForWeek(
+        \DateTimeImmutable $date
+    ): array {
+        $start = $date
+            ->modify('monday this week')
+            ->setTime(
+                0,
+                0
+            );
+
+        $end = $start->modify(
+            '+7 days'
+        );
+
+        return $this->findForPeriod(
+            $start,
+            $end
+        );
     }
 }

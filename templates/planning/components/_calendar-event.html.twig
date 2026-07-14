@@ -1,0 +1,12 @@
+<div class="planning-event {{ event.type }}" style="top: {{ top }}px; height: {{ height }}px;" data-event-id="{{ event.id }}">
+	<span class="time-interval">
+		<i class="fa-regular fa-clock"></i>
+		{{ event.startAt|slice(11,5) }}
+		-
+		{{ event.endAt|slice(11,5) }}
+	</span>
+	<br>
+	<span class="event-title">
+		{{ event.title }}
+	</span>
+</div>

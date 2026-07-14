@@ -1,0 +1,7 @@
+{% for event in events %}
+	{% include "planning/components/_calendar-event.html.twig" with {
+		event: event,
+		top: event.top,
+		height: event.height
+	} %}
+{% endfor %}

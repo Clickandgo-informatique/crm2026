@@ -11,17 +11,9 @@
 		<article class="event-list-item event-type-{{ event.type.color() }}">
 
 			<div class="event-list-time">
-				<span>
-					{{ event.startAt|date('H:i') }}
-				</span>
-
-				{# <span>
-					-
-				</span> #}
-
-				<span>
-					{{ event.endAt|date('H:i') }}
-				</span>
+				{{ event.startAt|date('H:i') }}
+				&rarr;
+				{{ event.endAt|date('H:i') }}
 			</div>
 
 			<div class="event-list-content">

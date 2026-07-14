@@ -1,133 +1,145 @@
 import type {
     PlanningEvent
-} from "../core/planning-types";
-
+} from "./planning-types";
 import {
     SLOT_HEIGHT
 } from "./planning-config";
-
 import {
     getCalendarZoom
 } from "./planning-state";
-
 import {
     formatDate
 } from "./date-utils";
-
-// Données temporaires de test
-// Elles seront remplacées plus tard par un appel Symfony
-const events: PlanningEvent[] = [
-    {
-        id: 1,
-        title: "Rendez-vous client",
-        type: "appointment",
-        start: "2026-07-10 10:00",
-        end: "2026-07-10 11:30"
-    },
-    {
-        id: 2,
-        title: "Relance devis",
-        type: "task",
-        start: "2026-07-11 14:00",
-        end: "2026-07-11 15:00"
-    },
-    {
-        id: 3,
-        title: "Séminaire jésuite",
-        type: "task",
-        start: "2026-07-11 17:00",
-        end: "2026-07-11 21:00"
-    }
-];
-
-// Formate une heure sans dépendre du fuseau horaire
-function formatEventTime(dateTime: string): string
-{
-    return dateTime.substring(11, 16);
+// Calcule la position verticale et la hauteur d'un événement dans la grille
+function calculateEventPosition(
+    event: PlanningEvent
+): {
+    top: number;
+    height: number;
 }
-
-// Ajoute les événements correspondant à une journée
-export function createPlanningEvents(
-    dayColumn: HTMLElement,
-    date: Date
-): void
 {
-    const dayEvents = events.filter(event =>
-        event.start.startsWith(formatDate(date))
+    const start =
+        new Date(event.startAt);
+    const end =
+        new Date(event.endAt);
+    const startMinutes =
+        start.getHours() * 60
+        +
+        start.getMinutes();
+    const endMinutes =
+        end.getHours() * 60
+        +
+        end.getMinutes();
+    return {
+        top:
+            (
+                startMinutes / 60
+            )
+            *
+            SLOT_HEIGHT
+            *
+            getCalendarZoom(),
+        height:
+            (
+                (
+                    endMinutes
+                    -
+                    startMinutes
+                )
+                /
+                60
+            )
+            *
+            SLOT_HEIGHT
+            *
+            getCalendarZoom()
+    };
+}
+// Charge et affiche les événements d'une colonne journée
+export async function createPlanningEvents(
+    dayColumn: HTMLElement,
+    date: Date,
+    events: PlanningEvent[]
+): Promise<void>
+{
+        if (!events) {
+        console.warn(
+            'Aucun événement transmis à createPlanningEvents'
+        );
+
+        return;
+    }
+    console.log(
+        'createPlanningEvents appelé',
+        date,
+        events
     );
-
-    dayEvents.forEach(event => {
-
-        const element = document.createElement('div');
-
-        element.classList.add('planning-event');
-
-        element.classList.add(event.type);
-
-        element.innerHTML = `
-            <span class="time-interval"><i class="fa-regular fa-clock"></i>
-                ${formatEventTime(event.start)}
-                -
-                ${formatEventTime(event.end)}
-            </span>
-            <br>
-            <span class="event-title">
-                ${event.title}
-            </span>
-        `;
-
-        const startHour = Number(
-            event.start.substring(11, 13)
-        );
-
-        const startMinute = Number(
-            event.start.substring(14, 16)
-        );
-
-        const endHour = Number(
-            event.end.substring(11, 13)
-        );
-
-        const endMinute = Number(
-            event.end.substring(14, 16)
-        );
-
-        const startPosition =
-            (
-                startHour * 60
-                +
-                startMinute
-            )
-            /
-            60
-            *
-            SLOT_HEIGHT;
-
-        const duration =
-            (
-                (
-                    endHour * 60
-                    +
-                    endMinute
-                )
-                -
-                (
-                    startHour * 60
-                    +
-                    startMinute
+    // Sélectionne uniquement les événements du jour affiché
+    const dayEvents =
+        events
+            .filter(event =>
+                event.startAt.startsWith(
+                    formatDate(date)
                 )
             )
-            /
-            60
-            *
-            SLOT_HEIGHT;
-
-        element.style.top =
-            `${startPosition * getCalendarZoom()}px`;
-
-        element.style.height =
-            `${duration * getCalendarZoom()}px`;
-
-        dayColumn.appendChild(element);
-    });
+            .map(event => {
+                const position =
+                    calculateEventPosition(
+                        event
+                    );
+                return {
+                    ...event,
+                    ...position
+                };
+            });
+    console.log(
+        'events filtrés',
+        dayEvents
+    );
+    // Aucun événement pour cette journée
+    if (dayEvents.length === 0) {
+        console.log(
+            'aucun événement pour cette journée'
+        );
+        return;
+    }
+    console.log(
+        'envoi des événements au rendu Twig'
+    );
+    // Demande à Symfony de générer les fragments HTML
+    const response =
+        await fetch(
+            '/planning/events/render',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    dayEvents
+                )
+            }
+        );
+    console.log(
+        'réponse serveur',
+        response.status
+    );
+    if (!response.ok) {
+        console.error(
+            "Impossible de charger les fragments événements"
+        );
+        return;
+    }
+    // Récupération du HTML généré par Twig
+    const html =
+        await response.text();
+    console.log(
+        'fragment événement reçu',
+        html
+    );
+    // Injection du fragment dans la colonne du jour
+    dayColumn.insertAdjacentHTML(
+        'beforeend',
+        html
+    );
 }

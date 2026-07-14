@@ -3,19 +3,27 @@ import {
     getMondayOfWeek,
     getSelectedDate
 } from "../core/date-utils";
+
 import {
     START_HOUR,
     END_HOUR,
     SLOT_DURATION
 } from "../core/planning-config";
+
 import {
     createPlanningEvents
 } from "../core/planning-events";
 
+import type {
+    PlanningEvent
+} from "../core/planning-types";
+
 export function createCalendarGrid(
     grid: HTMLElement,
     referenceDate: Date,
-    numberOfDays: number
+    numberOfDays: number,
+    events:PlanningEvent[]
+   
 ): void
 {
     grid.innerHTML = "";
@@ -27,14 +35,15 @@ export function createCalendarGrid(
 
     createTimeColumn(grid);
 
-   const startDate =
-    numberOfDays === 7
-        ? getMondayOfWeek(referenceDate)
-        : referenceDate;
+    const startDate =
+        numberOfDays === 7
+            ? getMondayOfWeek(referenceDate)
+            : referenceDate;
 
     for (let i = 0; i < numberOfDays; i++) {
 
-        const date = new Date(startDate);
+        const date =
+            new Date(startDate);
 
         date.setDate(
             startDate.getDate() + i
@@ -42,23 +51,29 @@ export function createCalendarGrid(
 
         createDayColumn(
             grid,
-            date
+            date,
+            events
         );
     }
 }
 
-// Création de la colonne des horaires
 function createTimeColumn(
     grid: HTMLElement
 ): void
 {
-    const timeColumn = document.createElement('div');
+    const timeColumn =
+        document.createElement('div');
 
-    timeColumn.classList.add('time-column');
+    timeColumn.classList.add(
+        'time-column'
+    );
 
-    const header = document.createElement('div');
+    const header =
+        document.createElement('div');
 
-    header.classList.add('hours-label-header');
+    header.classList.add(
+        'hours-label-header'
+    );
 
     timeColumn.appendChild(header);
 
@@ -68,9 +83,12 @@ function createTimeColumn(
         hour += SLOT_DURATION / 60
     ) {
 
-        const label = document.createElement('div');
+        const label =
+            document.createElement('div');
 
-        label.classList.add('time-label');
+        label.classList.add(
+            'time-label'
+        );
 
         label.textContent =
             `${hour.toString().padStart(2, '0')}:00`;
@@ -78,57 +96,93 @@ function createTimeColumn(
         timeColumn.appendChild(label);
     }
 
-    grid.appendChild(timeColumn);
+    grid.appendChild(
+        timeColumn
+    );
 }
 
-// Création d'une colonne journée
-function createDayColumn(
+async function createDayColumn(
     grid: HTMLElement,
-    date: Date
-): void
+    date: Date,
+    events:PlanningEvent[]
+): Promise<void>
 {
-    const dayColumn = document.createElement('div');
+    const dayColumn =
+        document.createElement('div');
 
-    dayColumn.classList.add('planning-day-column');
+    dayColumn.classList.add(
+        'planning-day-column'
+    );
 
     dayColumn.dataset.date =
         formatDate(date);
 
-    const selectedDate = getSelectedDate();
+
+    const selectedDate =
+        getSelectedDate();
 
     if (
         formatDate(date) === formatDate(selectedDate)
     ) {
-        dayColumn.classList.add('selected-column');
+        dayColumn.classList.add(
+            'selected-column'
+        );
     }
 
-    const dayColumnHeader = document.createElement('div');
-    dayColumnHeader.classList.add('day-column-header');
+    const dayColumnHeader =
+        document.createElement('div');
 
-    const weekday = date.toLocaleDateString(
-        'fr-FR',
-        {
-            weekday: 'short'
-        }
+    dayColumnHeader.classList.add(
+        'day-column-header'
     );
 
-    const dayNumber = date.getDate();
 
-    const headerDayTitle=document.createElement('span')
-    headerDayTitle.classList.add('header-day-title')
-    headerDayTitle.textContent=weekday
+    const weekday =
+        date.toLocaleDateString(
+            'fr-FR',
+            {
+                weekday: 'short'
+            }
+        );
 
-    const headerDayNumber=document.createElement('span')
-    headerDayNumber.classList.add('header-day-number')
-    headerDayNumber.textContent=dayNumber
+    const dayNumber =
+        date.getDate();
 
-    dayColumnHeader.appendChild(headerDayTitle)
-    dayColumnHeader.appendChild(headerDayNumber)
+    const headerDayTitle =
+        document.createElement('span');
 
-    
+    headerDayTitle.classList.add(
+        'header-day-title'
+    );
+
+    headerDayTitle.textContent =
+        weekday;
 
 
-    dayColumn.appendChild(dayColumnHeader);
+    const headerDayNumber =
+        document.createElement('span');
+
+    headerDayNumber.classList.add(
+        'header-day-number'
+    );
+
+    headerDayNumber.textContent =
+        dayNumber.toString();
+
+
+    dayColumnHeader.appendChild(
+        headerDayTitle
+    );
+
+    dayColumnHeader.appendChild(
+        headerDayNumber
+    );
+
+
+    dayColumn.appendChild(
+        dayColumnHeader
+    );
+
 
     for (
         let hour = START_HOUR;
@@ -136,9 +190,12 @@ function createDayColumn(
         hour += SLOT_DURATION / 60
     ) {
 
-        const slot = document.createElement('div');
+        const slot =
+            document.createElement('div');
 
-        slot.classList.add('time-slot');
+        slot.classList.add(
+            'time-slot'
+        );
 
         slot.dataset.date =
             formatDate(date);
@@ -146,13 +203,20 @@ function createDayColumn(
         slot.dataset.time =
             `${hour.toString().padStart(2, '0')}:00`;
 
-        dayColumn.appendChild(slot);
+        dayColumn.appendChild(
+            slot
+        );
     }
 
-    createPlanningEvents(
+
+    await createPlanningEvents(
         dayColumn,
-        date
+        date,
+        events
     );
 
-    grid.appendChild(dayColumn);
+
+    grid.appendChild(
+        dayColumn
+    );
 }

@@ -18,6 +18,6 @@ export interface PlanningEvent {
     id: number;
     title: string;
     type: 'appointment' | 'task';
-    start: string; // YYYY-MM-DD HH:mm
-    end: string;   // YYYY-MM-DD HH:mm
+    startAt: string; // YYYY-MM-DD HH:mm
+    endAt: string;   // YYYY-MM-DD HH:mm
 }
