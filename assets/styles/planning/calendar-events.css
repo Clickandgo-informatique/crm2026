@@ -190,8 +190,7 @@
         border-radius: 10px;
     }
 
-    .event-list-time {
-        width: 80px;
+    .event-list-time {       
         font-size: 0.85rem;
     }
 
@@ -206,6 +205,7 @@
 
 @media (max-width: 600px) {
     .event-list {
+        flex-direction: row;
         width: 100%;
     }
 

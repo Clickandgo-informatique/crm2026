@@ -1,36 +1,22 @@
-export function renderCalendarEvents(
-    grid: HTMLElement,
-    events: any[]
-): void {
+export function renderCalendarEvents(grid: HTMLElement, events: any[]): void {
+    events.forEach((event) => {
+        const eventDate = new Date(event.startAt);
 
-    events.forEach(event => {
+        const dayIndex = (eventDate.getDay() + 6) % 7;
 
-        const eventDate =
-            new Date(event.startAt);
+        const cells = grid.querySelectorAll<HTMLElement>(".time-slot");
 
-        const dayIndex =
-            (eventDate.getDay() + 6) % 7;
-
-        const cells =
-            grid.querySelectorAll<HTMLElement>(
-                '.time-slot'
-            );
-
-        const cell =
-            cells[dayIndex];
+        const cell = cells[dayIndex];
 
         if (!cell) {
             return;
         }
 
-        const element =
-            document.createElement('div');
+        const element = document.createElement("div");
 
-        element.className =
-            'calendar-event';
+        element.className = "calendar-event";
 
-        element.textContent =
-            event.title;
+        element.textContent = event.title;
 
         cell.appendChild(element);
     });

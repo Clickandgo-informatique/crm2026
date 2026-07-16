@@ -4,17 +4,15 @@
 @import "./calendar-events.css";
 @import "./calendar-zoom.css";
 @import "./mini-calendar.css";
-@import "./views/week-view.css";
 
 .planning-wrapper {
     display: grid;
     grid-template-columns: 1fr 7fr;
     gap: 5px;
-    background: rgb(241, 241, 241);
     margin-bottom: 25px;
 }
-.planning-main{
-    background: #f9f7f7;
+.planning-main {
+    /* background: #f9f7f7; */
 }
 .planning-sidebar {
     display: flex;
@@ -44,9 +42,28 @@
 }
 .btn.view-switch-btn-active {
     background: darkblue;
-    color:#fff;
+    color: #fff;
 }
 
+.day-view-content,
+.three-days-view-content,
+.week-view-content {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    width: 100%;
+    gap: 10px;
+    align-items: stretch;
+}
+.list-view-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+}
+
+.event-list {
+    flex: 1;
+}
 @keyframes fadeIn {
     from {
         opacity: 0.4;

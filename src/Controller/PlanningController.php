@@ -101,4 +101,40 @@ final class PlanningController extends AbstractController
             ]
         );
     }
+    #[Route('/events/day', name: 'events_day')]
+    public function dayEvents(
+        Request $request,
+        CalendarEventRepository $calendarEventRepository
+    ): JsonResponse {
+
+        $dateParam =
+            $request->query->get('date');
+
+        $date =
+            $dateParam
+            ? new \DateTimeImmutable($dateParam)
+            : new \DateTimeImmutable();
+
+        return $this->json(
+            $calendarEventRepository->findForDay($date)
+        );
+    }
+    #[Route('/events/three-days', name: 'events_three_days')]
+public function threeDaysEvents(
+    Request $request,
+    CalendarEventRepository $calendarEventRepository
+): JsonResponse {
+
+    $dateParam =
+        $request->query->get('date');
+
+    $date =
+        $dateParam
+        ? new \DateTimeImmutable($dateParam)
+        : new \DateTimeImmutable();
+
+    return $this->json(
+        $calendarEventRepository->findForThreeDays($date)
+    );
+}
 }

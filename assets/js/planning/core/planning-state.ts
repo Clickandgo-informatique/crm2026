@@ -4,14 +4,12 @@
 let calendarZoom = 1;
 
 // Retourne le niveau de zoom actuel
-export function getCalendarZoom(): number
-{
+export function getCalendarZoom(): number {
     return calendarZoom;
 }
 
 // Modifie le niveau de zoom actuel
-export function setCalendarZoom(value: number): void
-{
+export function setCalendarZoom(value: number): void {
     calendarZoom = value;
 }
 
@@ -19,11 +17,9 @@ export function setCalendarZoom(value: number): void
 let selectedDate = new Date();
 
 export function getSelectedDate(): Date {
-    return selectedDate;
+    return new Date(selectedDate);
 }
 
-export function setSelectedDate(
-    date: Date
-): void {
-    selectedDate = date;
+export function setSelectedDate(date: Date): void {
+    selectedDate = new Date(date);
 }

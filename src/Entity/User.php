@@ -32,6 +32,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserPreference $preference = null;
+
+    public function __construct()
+    {
+        $this->preference = new UserPreference();
+        $this->preference->setUser($this);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,8 +111,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __serialize(): array
     {
         $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
+    }
+
+    public function getPreference(): ?UserPreference
+    {
+        return $this->preference;
+    }
+    
+    public function setPreference(UserPreference $preference): static
+    {
+        $this->preference = $preference;
+
+        if ($preference->getUser() !== $this) {
+            $preference->setUser($this);
+        }
+
+        return $this;
     }
 }

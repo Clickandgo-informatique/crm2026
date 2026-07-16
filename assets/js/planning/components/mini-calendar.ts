@@ -2,9 +2,10 @@ import {
     formatDate,
     formatWeekRange,
     getFirstMondayOfCalendar,
-    isSameWeek,
-    setSelectedDate
+    isSameWeek  
 } from "../core/date-utils.ts"
+
+import { setSelectedDate } from "../core/planning-state.ts";
 
 let activeMonthLabel: HTMLElement | null = null;
 let calendarGrid: HTMLElement | null = null;

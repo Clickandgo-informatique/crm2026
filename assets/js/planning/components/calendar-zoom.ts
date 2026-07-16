@@ -1,49 +1,27 @@
-import {
-    setCalendarZoom,
-    getCalendarZoom
-} from "../core/planning-state";
+import { setCalendarZoom, getCalendarZoom } from "../core/planning-state";
 
-export function initCalendarZoom(root: HTMLElement): void
-{
-    const zoomRange =
-        root.querySelector<HTMLInputElement>('.zoom-range');
+export function initCalendarZoom(root: HTMLElement): void {
+    const zoomRange = root.querySelector<HTMLInputElement>(".zoom-range");
 
-    const calendarGrid =
-        root.querySelector<HTMLElement>('.calendar-grid');
+    const calendarGrid = root.querySelector<HTMLElement>(".calendar-grid");
 
     if (!zoomRange || !calendarGrid) {
         return;
     }
 
-    zoomRange.value =
-        getCalendarZoom().toString();
+    zoomRange.value = getCalendarZoom().toString();
 
-    applyZoom(
-        calendarGrid
-    );
+    applyZoom(calendarGrid);
 
-    zoomRange.addEventListener(
-        'input',
-        (event) => {
+    zoomRange.addEventListener("input", (event) => {
+        const input = event.target as HTMLInputElement;
 
-            const input =
-                event.target as HTMLInputElement;
+        setCalendarZoom(Number(input.value));
 
-            setCalendarZoom(
-                Number(input.value)
-            );
-
-            applyZoom(
-                calendarGrid
-            );
-        }
-    );
+        applyZoom(calendarGrid);
+    });
 }
 
-function applyZoom(grid: HTMLElement): void
-{
-    grid.style.setProperty(
-        '--planning-zoom',
-        getCalendarZoom().toString()
-    );
+function applyZoom(grid: HTMLElement): void {
+    grid.style.setProperty("--planning-zoom", getCalendarZoom().toString());
 }
