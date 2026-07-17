@@ -2,7 +2,8 @@
 
 namespace App\Service\DateTime;
 
-use App\DTO\TimeZoneOption;
+
+use App\Service\DateTime\DTO\TimeZoneOption;
 use DateTimeImmutable;
 use DateTimeZone;
 use InvalidArgumentException;

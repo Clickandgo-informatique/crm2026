@@ -1,0 +1,23 @@
+form{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    padding: 25px;
+    border:1px solid lightgray;
+    border-radius: 25px;
+  margin-top: 25px;
+}
+.form-ui{
+    max-width:800px;
+}
+form input{
+    height:50px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border:1px solid darkgray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+button[type="submit"]{
+    margin-top: 20px;
+}

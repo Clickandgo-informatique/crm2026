@@ -5,7 +5,7 @@ import { START_HOUR, END_HOUR, SLOT_DURATION } from "../core/planning-config";
 
 import { createPlanningEvents } from "../core/planning-events";
 
-import type { PlanningEvent } from "../core/planning-types";
+import type { PlanningEvent } from "../core/types";
 
 export async function createCalendarGrid(
     grid: HTMLElement,

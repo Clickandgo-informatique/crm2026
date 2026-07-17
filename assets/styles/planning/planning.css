@@ -10,6 +10,11 @@
     grid-template-columns: 1fr 7fr;
     gap: 5px;
     margin-bottom: 25px;
+    width: 100%;
+}
+#planning-view-switcher,
+#planning-view-container,.three-days-view-wrapper {
+    width: 100%;
 }
 .planning-main {
     /* background: #f9f7f7; */
@@ -47,6 +52,7 @@
 
 .day-view-content,
 .three-days-view-content,
+
 .week-view-content {
     display: grid;
     grid-template-columns: 1fr 50px;

@@ -1,0 +1,14 @@
+.sidebar{
+    display:flex;
+    justify-content: center;
+    width:350px;
+    min-height: 100vh;
+    padding: 10px;
+    margin-right: 10px;
+    border:1px solid lightgray;
+}
+.user-preferences{
+    position:absolute;
+    bottom: 10px;
+  
+}

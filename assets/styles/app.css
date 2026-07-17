@@ -4,6 +4,8 @@
 @import "./kanban.css";
 @import "./planning/planning.css";
 @import "./button.css";
+@import "./form.css";
+@import "./sidebar.css";
 
 
 * {
@@ -22,5 +24,9 @@ main {
     display: flex;
     flex-direction: column;
     width: 100%;    
-    min-height: 100vh;
+    min-height: 100vh;align-items: center;
+}
+.page-wrapper{
+    display:flex;
+    width:100%;    
 }

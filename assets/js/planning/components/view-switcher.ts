@@ -1,39 +1,47 @@
 export type PlanningView = "week" | "three-days" | "day" | "list";
 
-export function initViewSwitcher(root: HTMLElement): void {
-    console.log("view-switcher initialisé");
-
-    const buttons =
-        root.querySelectorAll<HTMLButtonElement>(".view-switch-btn");
-    const currentView = (root.dataset.currentView as PlanningView) ?? "week";
-
-    buttons.forEach((button) => {
-        if (button.dataset.view === currentView) {
-            button.classList.add("view-switch-btn-active");
-        } else {
-            button.classList.remove("view-switch-btn-active");
+export class ViewSwitcher {
+    public initialize(root: Element | null): void {
+        if (!root) {
+            return;
         }
 
-        button.addEventListener("click", () => {
-            const view = button.dataset.view as PlanningView;
+        console.log("ViewSwitcher initialisé");
 
-            if (!view) {
-                return;
+        const buttons =
+            root.querySelectorAll<HTMLButtonElement>(".view-switch-btn");
+
+        const currentView =
+            (root.getAttribute("data-current-view") as PlanningView) ?? "week";
+
+        buttons.forEach((button) => {
+            if (button.dataset.view === currentView) {
+                button.classList.add("view-switch-btn-active");
+            } else {
+                button.classList.remove("view-switch-btn-active");
             }
 
-            buttons.forEach((btn) =>
-                btn.classList.remove("view-switch-btn-active"),
-            );
+            button.addEventListener("click", () => {
+                const view = button.dataset.view as PlanningView;
 
-            button.classList.add("view-switch-btn-active");
+                if (!view) {
+                    return;
+                }
 
-            document.dispatchEvent(
-                new CustomEvent("planningViewChanged", {
-                    detail: {
-                        view,
-                    },
-                }),
-            );
+                buttons.forEach((btn) =>
+                    btn.classList.remove("view-switch-btn-active"),
+                );
+
+                button.classList.add("view-switch-btn-active");
+
+                document.dispatchEvent(
+                    new CustomEvent("planningViewChanged", {
+                        detail: {
+                            view,
+                        },
+                    }),
+                );
+            });
         });
-    });
+    }
 }

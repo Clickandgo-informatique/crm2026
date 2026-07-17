@@ -8,6 +8,10 @@ button,
     border: 1px solid lightgray;
     align-items: center;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 0.95rem;
     line-height: 35px;
+    text-decoration: none;
+}
+.btn i{
+    margin-right: 10px;
 }

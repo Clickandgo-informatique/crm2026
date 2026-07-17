@@ -27,19 +27,19 @@ final class PlanningController extends AbstractController
     {
         return match ($view) {
             'week' => $this->render(
-                'planning/views/_week-view.html.twig',
+                'planning/layouts/_week.html.twig',
                 ['title' => 'Planning hebdomadaire']
             ),
             'three-days' => $this->render(
-                'planning/views/_three-days-view.html.twig',
+                'planning/layouts/_three-days.html.twig',
                 ['title' => 'Planning à 3 jours']
             ),
             'day' => $this->render(
-                'planning/views/_day-view.html.twig',
+                'planning/layouts/_day.html.twig',
                 ['title' => 'Planning jour']
             ),
             'list' => $this->render(
-                'planning/views/_list-view.html.twig',
+                'planning/layouts/_list.html.twig',
                 ['title' => 'Vue liste']
             ),
             default => throw $this->createNotFoundException()
