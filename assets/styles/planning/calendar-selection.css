@@ -1,18 +1,12 @@
-.selected-column {
-    animation: fadeIn 0.5s ease;
-    border: 1px solid blue;
-    border-radius: 10px;
-    background: darkgray;
-}
-
-.selected-column .planning-day-label {
-    background: darkgray;
-}
-
-.selected-column .time-slot {
+.calendar-slot.selected,.calendar-header-cell.selected {
     background: rgb(248, 255, 235);
 }
-.selected-column .header-day-number{
-    background:darkblue;
-    color:white;
+.calendar-header-cell.selected,
+.calendar-slot.selected {
+    animation: fadeIn 0.5s ease;
+}
+
+.selected-planning-day .calendar-header-cell{background: darkgray;}
+.selected-planning-day .calendar-day-number{
+    background:darkblue;color:#ffff;
 }

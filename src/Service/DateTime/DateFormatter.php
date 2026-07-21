@@ -2,117 +2,80 @@
 
 namespace App\Service\DateTime;
 
-use App\Service\DateTime\DTO\DateTimePreferences;
+use App\Entity\UserPreference;
 use DateTimeImmutable;
 use IntlDateFormatter;
-use Locale;
 
 class DateFormatter
 {
     public function __construct(
-        private readonly DateTimePreferencesService $preferencesService
+        private readonly TimeZoneService $timeZoneService
     ) {}
 
     /**
-     * Formate une date courte.
+     * Formate une date selon les préférences utilisateur.
      */
-    public function formatDate(DateTimeImmutable $date): string
-    {
-        return $this->format(
-            $date,
-            $this->getPreferences()->dateFormat
-        );
-    }
-
-    /**
-     * Formate une heure.
-     */
-    public function formatTime(DateTimeImmutable $date): string
-    {
-        return $this->format(
-            $date,
-            $this->getPreferences()->timeFormat
-        );
-    }
-
-    /**
-     * Formate une date avec heure.
-     */
-    public function formatDateTime(DateTimeImmutable $date): string
-    {
-        return $this->format(
-            $date,
-            $this->getPreferences()->dateFormat . ' ' .
-                $this->getPreferences()->timeFormat
-        );
-    }
-
-    /**
-     * Formate une date longue.
-     */
-    public function formatLongDate(DateTimeImmutable $date): string
-    {
-        $formatter = new IntlDateFormatter(
-            $this->getPreferences()->locale,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::NONE,
-            $date->getTimezone(),
-            IntlDateFormatter::GREGORIAN
-        );
-
-        return $formatter->format($date);
-    }
-
-    /**
-     * Retourne une date relative.
-     */
-    public function formatRelative(
+    public function formatDate(
         DateTimeImmutable $date,
-        ?DateTimeImmutable $reference = null
+        ?UserPreference $preference = null
     ): string {
-        $reference ??= new DateTimeImmutable();
-
-        $diff = $reference->diff($date);
-
-        if ($diff->days === 0) {
-            return 'Aujourd’hui';
-        }
-
-        if ($diff->days === 1 && $diff->invert === 0) {
-            return 'Demain';
-        }
-
-        if ($diff->days === 1 && $diff->invert === 1) {
-            return 'Hier';
-        }
-
-        return $this->formatDate($date);
+        return $this->format(
+            $date,
+            $preference,
+            IntlDateFormatter::SHORT,
+            IntlDateFormatter::NONE
+        );
     }
 
     /**
-     * Effectue le formatage avec Intl.
+     * Formate une heure selon les préférences utilisateur.
+     */
+    public function formatTime(
+        DateTimeImmutable $date,
+        ?UserPreference $preference = null
+    ): string {
+        return $this->format(
+            $date,
+            $preference,
+            IntlDateFormatter::NONE,
+            IntlDateFormatter::SHORT
+        );
+    }
+
+    /**
+     * Formate une date et une heure selon les préférences utilisateur.
+     */
+    public function formatDateTime(
+        DateTimeImmutable $date,
+        ?UserPreference $preference = null
+    ): string {
+        return $this->format(
+            $date,
+            $preference,
+            IntlDateFormatter::SHORT,
+            IntlDateFormatter::SHORT
+        );
+    }
+
+    /**
+     * Formate une date avec les paramètres régionaux utilisateur.
      */
     private function format(
         DateTimeImmutable $date,
-        string $pattern
+        ?UserPreference $preference,
+        int $dateType,
+        int $timeType
     ): string {
+        $locale = $preference?->getLocale() ?? 'fr_FR';
+        $timezone = $this->timeZoneService->getUserTimeZone($preference);
+
         $formatter = new IntlDateFormatter(
-            $this->getPreferences()->locale,
-            IntlDateFormatter::NONE,
-            IntlDateFormatter::NONE,
-            $date->getTimezone(),
-            IntlDateFormatter::GREGORIAN,
-            $pattern
+            $locale,
+            $dateType,
+            $timeType,
+            $timezone->getName()
         );
 
         return $formatter->format($date);
-    }
-
-    /**
-     * Retourne les préférences actuelles.
-     */
-    private function getPreferences(): DateTimePreferences
-    {
-        return $this->preferencesService->getPreferences();
     }
 }

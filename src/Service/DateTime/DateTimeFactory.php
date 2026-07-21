@@ -2,16 +2,15 @@
 
 namespace App\Service\DateTime;
 
-use App\Service\DateTime\DTO\TimeZoneService;
 use DateTimeImmutable;
 use DateTimeZone;
 
 class DateTimeFactory
 {
     public function __construct(
-        private readonly TimeZoneService $timeZoneService,
-        private readonly DateTimePreferencesService $preferencesService
-    ) {}
+        private readonly TimeZoneService $timeZoneService
+    ) {
+    }
 
     /**
      * Retourne la date et l'heure courantes.
@@ -88,13 +87,12 @@ class DateTimeFactory
     }
 
     /**
-     * Retourne le fuseau horaire demandé ou celui des préférences utilisateur.
+     * Retourne le fuseau horaire demandé ou celui par défaut.
      */
     private function getTimeZone(?string $timeZone): DateTimeZone
     {
-        $identifier = $timeZone
-            ?? $this->preferencesService->getPreferences()->timezone;
-
-        return $this->timeZoneService->getTimeZone($identifier);
+        return $this->timeZoneService->getTimeZone(
+            $timeZone ?? $this->timeZoneService->getDefaultTimeZone()
+        );
     }
 }

@@ -1,4 +1,4 @@
-export type PlanningView = "week" | "three-days" | "day" | "list";
+import type { PlanningView } from "../core/planning-view";
 
 export class ViewSwitcher {
     public initialize(root: Element | null): void {

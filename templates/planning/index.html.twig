@@ -2,14 +2,26 @@
 
 {% block body %}
 
-	<div id="planning">
-		{% include 'planning/_mini-calendar.html.twig' %}
+	<div id="planning" class="planning-container">
+		<aside class="planning-tools-panel">
 
-		{% include 'planning/_toolbar.html.twig' %}
+			<div class="planning-tools-content">
+				{% include 'planning/_mini-calendar.html.twig' %}
+			</div>
+		</aside>
 
-		<div id="planning-header"></div>
+		<button type="button" class="planning-tools-toggle">
+			<i class="fa-solid fa-chevron-left"></i>
+		</button>
 
-		<div id="planning-viewport"></div>
+		<section class="planning-main">
+
+			{% include 'planning/_toolbar.html.twig' %}
+
+			<div id="planning-header"></div>
+			<div id="planning-viewport"></div>
+
+		</section>
 
 	</div>
 

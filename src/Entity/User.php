@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: UserPreference::class, cascade: ['persist', 'remove'])]
     private ?UserPreference $preference = null;
 
     #[ORM\Column]
@@ -125,7 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->preference;
     }
-    
+
     public function setPreference(UserPreference $preference): static
     {
         $this->preference = $preference;

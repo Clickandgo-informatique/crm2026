@@ -1,26 +1,21 @@
-{% block title %}
-	{{title}}
-{% endblock %}
-{% block body %}
-	<div class="three-days-view-wrapper">
+<div class="three-days-view-wrapper">
 
-		<div class="calendar-header">
-			<div class="calendar-navigation">
-				<button id="previous-three-days" class="btn btn-previous">
-					&#x2039;
-				</button>
-				<span id="three-days-label"></span>
-				<button id="next-three-days" class="btn btn-next">
-					&#x203A;
-				</button>
-			</div>
-		</div>
-
-		<div class="three-days-view-content">
-
-			<div class="calendar-grid"></div>
-			{% include "planning/_calendar-zoom.html.twig" %}
-
+	<div class="calendar-header">
+		<div class="calendar-navigation">
+			<button id="previous-three-days" class="btn btn-previous">
+				&#x2039;
+			</button>
+			<span id="planning-period-label"></span>
+			<button id="next-three-days" class="btn btn-next">
+				&#x203A;
+			</button>
 		</div>
 	</div>
-{% endblock %}
+
+	<div class="three-days-view-content">
+
+		<div class="calendar-grid"></div>
+		{% include "planning/_calendar-zoom.html.twig" %}
+
+	</div>
+</div>

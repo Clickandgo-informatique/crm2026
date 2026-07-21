@@ -1,30 +1,82 @@
 @import "./calendar-grid.css";
-@import "./calendar-header.css";
 @import "./calendar-selection.css";
 @import "./calendar-events.css";
 @import "./calendar-zoom.css";
 @import "./mini-calendar.css";
 
-.planning-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 7fr;
-    gap: 5px;
-    margin-bottom: 25px;
-    width: 100%;
-}
+
+
 #planning-view-switcher,
-#planning-view-container,.three-days-view-wrapper {
+#planning-view-container,
+.three-days-view-wrapper {
     width: 100%;
 }
+
+/*
+ * Conteneur principal du module planning.
+ *
+ * Colonne gauche :
+ * - mini calendrier
+ * - filtres futurs
+ * - ressources futures
+ *
+ * Colonne droite :
+ * - toolbar
+ * - header
+ * - calendrier
+ */
+.planning-container {
+    --tools-panel-width: 300px;
+    display: grid;
+    grid-template-columns: var(--tools-panel-width) minmax(0, 1fr);
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: grid-template-columns 0.6s ease-in-out;
+    gap: 0.6s ease-in-out;
+}
+.planning-tools-toggle {
+    position: absolute;
+    left: var(--tools-panel-width);
+    top: 5px;
+    z-index: 1000;
+    transition: left 0.6s ease-in-out;
+}
+.planning-container.collapsed {
+    grid-template-columns: 0 minmax(0, 1fr);
+    gap: 0;
+}
+.planning-container.collapsed .planning-tools-toggle {
+    left: 0;
+}
+.planning-tools-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.planning-container.collapsed .planning-tools-toggle i {
+    transform: rotate(180deg);
+}
+/*
+ * Panneau outils gauche.
+ */
+.planning-tools-panel {
+    position: relative;
+}
+.planning-tools-content {
+    overflow: hidden;
+}
+
+/*
+ * Zone principale du planning.
+ */
 .planning-main {
-    /* background: #f9f7f7; */
+    min-width: 0;
+    overflow: hidden;
 }
-.planning-sidebar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 5px;
-}
+
+/*
+ * Boutons de changement de vue.
+ */
 .btn.view-switch-btn {
     display: inline-flex;
     align-items: center;
@@ -38,6 +90,7 @@
     font-size: 1.1rem;
     line-height: 1;
 }
+
 .view-switcher {
     display: flex;
     width: fit-content;
@@ -45,21 +98,31 @@
     gap: 5px;
     margin: 5px auto;
 }
+
 .btn.view-switch-btn-active {
     background: darkblue;
     color: #fff;
 }
 
+/*
+ * Layout des vues calendrier.
+ *
+ * Le calendrier prend l'espace disponible.
+ * Le zoom reste dans une colonne dédiée.
+ */
 .day-view-content,
 .three-days-view-content,
-
 .week-view-content {
     display: grid;
-    grid-template-columns: 1fr 50px;
+    grid-template-columns: minmax(0, 1fr) 50px;
     width: 100%;
     gap: 10px;
     align-items: stretch;
 }
+
+/*
+ * Vue liste.
+ */
 .list-view-content {
     display: flex;
     flex-direction: column;
@@ -70,6 +133,10 @@
 .event-list {
     flex: 1;
 }
+
+/*
+ * Animation utilisée lors des changements de vue.
+ */
 @keyframes fadeIn {
     from {
         opacity: 0.4;

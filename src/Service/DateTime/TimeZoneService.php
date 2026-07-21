@@ -2,7 +2,7 @@
 
 namespace App\Service\DateTime;
 
-
+use App\Entity\UserPreference;
 use App\Service\DateTime\DTO\TimeZoneOption;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -12,6 +12,8 @@ class TimeZoneService
 {
     // Cache des fuseaux horaires construits pendant la requête.
     private array $options = [];
+    // Cache statique des identifiants IANA disponibles.
+    private static array $identifiers = [];
 
     /**
      * Retourne tous les identifiants IANA.
@@ -20,7 +22,7 @@ class TimeZoneService
      */
     public function getAllTimeZones(): array
     {
-        return DateTimeZone::listIdentifiers();
+        return $this->getIdentifiers();
     }
 
     /**
@@ -28,7 +30,7 @@ class TimeZoneService
      */
     public function isValid(string $identifier): bool
     {
-        return in_array($identifier, DateTimeZone::listIdentifiers(), true);
+        return in_array($identifier, $this->getIdentifiers(), true);
     }
 
     /**
@@ -51,7 +53,6 @@ class TimeZoneService
     public function convert(DateTimeImmutable $date, string $from, string $to): DateTimeImmutable
     {
         $date = $date->setTimezone($this->getTimeZone($from));
-
         return $date->setTimezone($this->getTimeZone($to));
     }
 
@@ -61,16 +62,25 @@ class TimeZoneService
     public function getOffset(string $identifier, ?DateTimeImmutable $date = null): int
     {
         $date ??= new DateTimeImmutable();
-
         return $this->getTimeZone($identifier)->getOffset($date);
     }
 
     /**
-     * Retourne le fuseau horaire par défaut de PHP.
+     * Retourne le fuseau horaire par défaut de l'application.
      */
     public function getDefaultTimeZone(): string
     {
-        return date_default_timezone_get();
+        return 'Europe/Paris';
+    }
+
+    /**
+     * Retourne le fuseau horaire associé aux préférences utilisateur.
+     */
+    public function getUserTimeZone(?UserPreference $preference): DateTimeZone
+    {
+        return $this->getTimeZone(
+            $preference?->getTimezone() ?? $this->getDefaultTimeZone()
+        );
     }
 
     /**
@@ -81,13 +91,11 @@ class TimeZoneService
     public function getChoices(): array
     {
         $choices = [];
-
         foreach ($this->getGroupedOptions() as $continent => $options) {
             foreach ($options as $option) {
                 $choices[$continent][$option->label] = $option->identifier;
             }
         }
-
         return $choices;
     }
 
@@ -101,11 +109,9 @@ class TimeZoneService
         if ($this->options !== []) {
             return $this->options;
         }
-
-        foreach (DateTimeZone::listIdentifiers() as $identifier) {
+        foreach ($this->getIdentifiers() as $identifier) {
             $this->options[] = $this->buildOption($identifier);
         }
-
         return $this->options;
     }
 
@@ -117,21 +123,30 @@ class TimeZoneService
     public function getGroupedOptions(): array
     {
         $result = [];
-
         foreach ($this->getOptions() as $option) {
             $result[$option->continent][] = $option;
         }
-
         ksort($result);
-
         foreach ($result as &$group) {
             usort(
                 $group,
                 fn(TimeZoneOption $a, TimeZoneOption $b) => strcmp($a->city, $b->city)
             );
         }
-
         return $result;
+    }
+
+    /**
+     * Retourne les identifiants IANA avec mise en cache.
+     *
+     * @return string[]
+     */
+    private function getIdentifiers(): array
+    {
+        if (self::$identifiers === []) {
+            self::$identifiers = DateTimeZone::listIdentifiers();
+        }
+        return self::$identifiers;
     }
 
     /**
@@ -140,20 +155,15 @@ class TimeZoneService
     private function buildOption(string $identifier): TimeZoneOption
     {
         $timezone = $this->getTimeZone($identifier);
-
         $parts = explode('/', $identifier, 2);
-
         $continent = $parts[0];
         $city = str_replace('_', ' ', $parts[1] ?? $identifier);
-
         $offset = $timezone->getOffset(new DateTimeImmutable());
-
         $label = sprintf(
             '(%s) %s',
             $this->formatOffset($offset),
             $city
         );
-
         return new TimeZoneOption(
             identifier: $identifier,
             continent: $continent,
@@ -170,7 +180,6 @@ class TimeZoneService
     {
         $sign = $offset >= 0 ? '+' : '-';
         $offset = abs($offset);
-
         return sprintf(
             'UTC%s%02d:%02d',
             $sign,

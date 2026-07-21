@@ -17,7 +17,7 @@ export class MiniCalendar {
     private btnToday: HTMLElement | null = null;
 
     private currentMonth = new Date();
-    private selectedDate = new Date();
+    private selectedDate = new Date();  
 
     private readonly today = new Date();
 
@@ -51,7 +51,7 @@ export class MiniCalendar {
             this.previousMonth(),
         );
 
-        this.btnToday?.addEventListener("click", () => this.goToToday());
+        this.btnToday?.addEventListener("click", () => this.goToToday());   
 
         setSelectedDate(this.selectedDate);
 

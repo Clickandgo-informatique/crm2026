@@ -26,8 +26,14 @@
 
 	<body>
 		{% include "partials/_navbar.html.twig" %}
+
 		<div class="page-wrapper">
 			{% include "partials/_sidebar.html.twig" %}
+
+			<button type="button" id="sidebar-toggle" class="sidebar-toggle">
+				<i class="fa-solid fa-chevron-right"></i>
+			</button>
+
 			<main>
 				{% block body %}{% endblock %}
 			</main>
