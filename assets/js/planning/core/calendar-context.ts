@@ -22,4 +22,7 @@ export interface CalendarRenderContext {
      * Liste des événements à afficher.
      */
     events: PlanningEvent[];
+
+    //Affichage des tâches
+    showTasks:boolean
 }

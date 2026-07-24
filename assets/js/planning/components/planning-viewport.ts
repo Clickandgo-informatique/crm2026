@@ -3,6 +3,7 @@ import { CalendarRenderer } from "../renderers/calendar-renderer";
 import { PLANNING_VIEW_CONFIG } from "../core/planning-view";
 import type { PlanningView } from "../core/planning-view";
 import { getSelectedDate } from "../core/planning-state";
+import { CalendarEventManager } from "../services/calendar-event-manager";
 
 export class PlanningViewport {
     // Service chargé de récupérer les fragments HTML des différentes vues
@@ -10,6 +11,9 @@ export class PlanningViewport {
 
     // Renderer générique de la grille calendrier
     private readonly renderer = new CalendarRenderer();
+
+    //Gestionnaire d'évènements
+    private readonly eventManager = new CalendarEventManager();
 
     // Conteneur principal du planning
     private container: Element | null = null;
@@ -51,10 +55,15 @@ export class PlanningViewport {
         if (configuration.numberOfDays === 0) {
             return;
         }
+        const events = await this.eventManager.load(view, getSelectedDate());
+        console.log("VIEW", view);
+        console.log("DATE", getSelectedDate());
+        console.log("EVENTS", events);
         await this.renderer.render(grid as HTMLElement, {
             referenceDate: getSelectedDate(),
             numberOfDays: configuration.numberOfDays,
-            events: [],
+            events,
+            showTasks: true,
         });
     }
     /**
