@@ -1,0 +1,35 @@
+.resources-grid {
+    display: grid;
+    grid-template-columns: 240px repeat(7, minmax(160px, 1fr));
+}
+
+.resource-header,
+.resource-day-header,
+.resource-cell {
+    border: 1px solid var(--color-border);
+}
+
+.resource-header {
+    padding: 12px;
+    font-weight: 600;
+    background: var(--surface-2);
+}
+
+.resource-day-header {
+    text-align: center;
+    padding: 12px;
+    font-weight: 600;
+}
+
+.resource-cell {
+    min-height: 120px;
+    padding: 8px;
+}
+
+.resource-event {
+    margin-bottom: 6px;
+    padding: 8px;
+    border-radius: 6px;
+    background: var(--resource-event-bg);
+    color: var(--resource-event-text);
+}

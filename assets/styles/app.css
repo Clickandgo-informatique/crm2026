@@ -6,6 +6,8 @@
 @import "./button.css";
 @import "./form.css";
 @import "./sidebar.css";
+@import "./planning/resources.css";
+@import "./variables.css";
 
 * {
     margin: 0;

@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\TimestampableTrait;
-use App\Enum\CalendarType;
+use App\Entity\Enum\CalendarType;
 use App\Repository\CalendarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     fields: ['tenant', 'name'],
     message: 'Un calendrier portant ce nom existe déjà dans ce tenant.'
 )]
+#[ORM\HasLifecycleCallbacks]
 class Calendar
 {
     use TimestampableTrait;

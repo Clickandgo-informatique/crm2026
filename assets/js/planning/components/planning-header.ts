@@ -52,6 +52,7 @@ export class PlanningHeader {
                 date.setDate(date.getDate() + direction * 3);
                 break;
             case "week":
+            case "resources":
             default:
                 date.setDate(date.getDate() + direction * 7);
                 break;
@@ -91,6 +92,7 @@ export class PlanningHeader {
                 this.periodLabel.textContent = `${this.currentDate.toLocaleDateString("fr-FR", options)} au ${endDate.toLocaleDateString("fr-FR", options)}`;
                 break;
             case "week":
+            case "resources":
             default:
                 const monday = getMondayOfWeek(this.currentDate);
                 const sunday = new Date(monday);

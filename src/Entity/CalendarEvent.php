@@ -68,9 +68,6 @@ class CalendarEvent
     private ?Organization $organization = null;
 
     #[ORM\ManyToOne]
-    private ?StaffMember $staffMember = null;
-
-    #[ORM\ManyToOne]
     private ?User $assignedTo = null;
 
     #[ORM\ManyToOne]
@@ -88,6 +85,12 @@ class CalendarEvent
 
     #[ORM\Column(enumType: EventType::class)]
     private EventType $type = EventType::APPOINTMENT;
+
+    #[ORM\ManyToOne(
+        inversedBy: 'events'
+    )]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?StaffMember $staffMember = null;
 
     public function getId(): ?int
     {
@@ -178,18 +181,6 @@ class CalendarEvent
         return $this;
     }
 
-    public function getStaffMember(): ?StaffMember
-    {
-        return $this->staffMember;
-    }
-
-    public function setStaffMember(?StaffMember $staffMember): static
-    {
-        $this->staffMember = $staffMember;
-
-        return $this;
-    }
-
     public function getAssignedTo(): ?User
     {
         return $this->assignedTo;
@@ -253,5 +244,16 @@ class CalendarEvent
     public function __toString(): string
     {
         return $this->title;
+    }
+    public function getStaffMember(): ?StaffMember
+    {
+        return $this->staffMember;
+    }
+
+    public function setStaffMember(?StaffMember $staffMember): static
+    {
+        $this->staffMember = $staffMember;
+
+        return $this;
     }
 }

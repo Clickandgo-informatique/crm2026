@@ -1,0 +1,285 @@
+:root {
+    /* =========================
+       THEME LIGHT
+       ========================= */
+
+    /* Backgrounds */
+    --color-bg-page: #f5f6f8;
+    --color-bg-surface: #ffffff;
+    --color-bg-sidebar: #ffffff;
+    --color-bg-header: #ffffff;
+    --color-bg-hover: #f0f2f5;
+    --color-bg-selected: #e8f0ff;
+
+    /* Textes */
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-text-muted: #9ca3af;
+    --color-text-inverse: #ffffff;
+
+    /* Borders */
+    --color-border: #e5e7eb;
+    --color-border-light: #f0f0f0;
+    --color-border-focus: #2563eb;
+
+    /* Primary */
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-primary-light: #dbeafe;
+
+    /* Status */
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-danger: #dc2626;
+    --color-info: #0284c7;
+
+
+    /* =========================
+       PLANNING
+       ========================= */
+
+    /* Grid */
+    --planning-bg: var(--color-bg-surface);
+    --planning-grid-border: #e5e7eb;
+    --planning-slot-bg: #ffffff;
+    --planning-slot-hover: #f8fafc;
+
+    /* Header */
+    --planning-header-bg: #ffffff;
+    --planning-header-text: var(--color-text-primary);
+
+    /* Jour sélectionné */
+    --planning-selected-day-bg: #eff6ff;
+    --planning-selected-day-border: #2563eb;
+
+
+    /* Events */
+    --event-bg: #2563eb;
+    --event-text: #ffffff;
+    --event-border: #1d4ed8;
+
+    --event-task-bg: #16a34a;
+    --event-task-text: #ffffff;
+
+    --event-appointment-bg: #2563eb;
+    --event-appointment-text: #ffffff;
+
+    --event-warning-bg: #d97706;
+    --event-danger-bg: #dc2626;
+
+
+    /* Resources */
+    --resource-header-bg: #f8fafc;
+    --resource-header-text: #111827;
+    --resource-cell-bg: #ffffff;
+    --resource-event-bg: #2563eb;
+    --resource-event-text: #ffffff;
+
+
+    /* =========================
+       SIDEBAR
+       ========================= */
+
+    --sidebar-min-width: 60px;
+    --sidebar-max-width: 260px;
+    --sidebar-width: var(--sidebar-min-width);
+
+    --sidebar-bg: #ffffff;
+    --sidebar-border: #e5e7eb;
+
+    --sidebar-item-hover: #f3f4f6;
+    --sidebar-item-active: #dbeafe;
+
+
+    /* =========================
+       LAYOUT
+       ========================= */
+
+    --header-height: 64px;
+
+    --planning-tools-width: 320px;
+
+    --content-padding: 16px;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+
+    /* =========================
+       SHADOWS
+       ========================= */
+
+    --shadow-sm:
+        0 1px 2px rgba(0,0,0,.05);
+
+    --shadow-md:
+        0 4px 12px rgba(0,0,0,.10);
+
+    --shadow-lg:
+        0 10px 25px rgba(0,0,0,.15);
+
+
+    /* =========================
+       TYPOGRAPHY
+       ========================= */
+
+    --font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+
+
+    /* =========================
+       TRANSITIONS
+       ========================= */
+
+    --transition-fast: .15s ease;
+    --transition-normal: .3s ease;
+    --transition-slow: .6s ease;
+
+
+    /* =========================
+       Z INDEX
+       ========================= */
+
+    --z-sidebar: 100;
+    --z-header: 200;
+    --z-modal: 500;
+    --z-tooltip: 1000;
+}
+
+
+/* =================================
+   THEME DARK
+   ================================= */
+
+[data-theme="dark"] {
+
+    /* Backgrounds */
+    --color-bg-page: #111827;
+    --color-bg-surface: #1f2937;
+    --color-bg-sidebar: #111827;
+    --color-bg-header: #1f2937;
+    --color-bg-hover: #374151;
+    --color-bg-selected: #1e3a8a;
+
+
+    /* Textes */
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #d1d5db;
+    --color-text-muted: #9ca3af;
+    --color-text-inverse: #111827;
+
+
+    /* Borders */
+    --color-border: #374151;
+    --color-border-light: #1f2937;
+    --color-border-focus: #60a5fa;
+
+
+    /* Primary */
+    --color-primary:
+        #60a5fa;
+
+    --color-primary-hover:
+        #93c5fd;
+
+    --color-primary-light:
+        #1e3a8a;
+
+
+    /* Planning */
+
+    --planning-bg:
+        #1f2937;
+
+    --planning-grid-border:
+        #374151;
+
+    --planning-slot-bg:
+        #1f2937;
+
+    --planning-slot-hover:
+        #374151;
+
+
+    --planning-header-bg:
+        #1f2937;
+
+    --planning-header-text:
+        #f9fafb;
+
+
+    --planning-selected-day-bg:
+        #172554;
+
+    --planning-selected-day-border:
+        #60a5fa;
+
+
+    /* Events */
+
+    --event-bg:
+        #3b82f6;
+
+    --event-text:
+        #ffffff;
+
+    --event-border:
+        #60a5fa;
+
+
+    /* Resources */
+
+    --resource-header-bg:
+        #111827;
+
+    --resource-header-text:
+        #f9fafb;
+
+    --resource-cell-bg:
+        #1f2937;
+
+    --resource-event-bg:
+        #3b82f6;
+
+    --resource-event-text:
+        #ffffff;
+
+
+    /* Sidebar */
+
+    --sidebar-bg:
+        #111827;
+
+    --sidebar-border:
+        #374151;
+
+    --sidebar-item-hover:
+        #1f2937;
+
+    --sidebar-item-active:
+        #1e3a8a;
+
+
+    /* Shadows */
+
+    --shadow-sm:
+        0 1px 2px rgba(0,0,0,.3);
+
+    --shadow-md:
+        0 4px 12px rgba(0,0,0,.4);
+
+    --shadow-lg:
+        0 10px 25px rgba(0,0,0,.5);
+}

@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
     fields: ['organization', 'staffMember'],
     message: 'Cet intervenant est déjà associé à cette organisation.'
 )]
+#[ORM\Index(
+    columns: ['organization_id', 'staff_member_id']
+)]
+#[ORM\HasLifecycleCallbacks]
 class OrganizationMember
 {
     use TimestampableTrait;

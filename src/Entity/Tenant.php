@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     fields: ['code'],
     message: 'Ce code est déjà utilisé.'
 )]
+#[ORM\HasLifecycleCallbacks]
 class Tenant
 {
     use TimestampableTrait;

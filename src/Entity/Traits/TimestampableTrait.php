@@ -9,18 +9,38 @@ trait TimestampableTrait
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+
+    #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $updatedAt = null;
+
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
+
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
 
     #[ORM\PrePersist]
     public function onPrePersist(): void
@@ -31,8 +51,11 @@ trait TimestampableTrait
             $this->createdAt = $now;
         }
 
-        $this->updatedAt = $now;
+        if ($this->updatedAt === null) {
+            $this->updatedAt = $now;
+        }
     }
+
 
     #[ORM\PreUpdate]
     public function onPreUpdate(): void
