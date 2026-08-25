@@ -2,40 +2,54 @@
 {% endblock %}
 
 {% block body %}
-
 	{{ form_start(form) }}
-	<div class="form-row">
-		{{form_row(form.type)}}
-		{{form_row(form.status)}}
-	</div>
 
-	{{form_row(form.title)}}
-	{{form_row(form.description)}}
-	{{form_row(form.staffMember)}}
+	<div class="form-section">
+		<h3>Événement</h3>
 
-	<div class="form-group">
-		<div class="checkbox">
-			{{ form_widget(form.allDay) }}
-			{{ form_label(form.allDay) }}
-			{{ form_errors(form.allDay) }}
-		</div>
 		<div class="form-row">
-			{{form_row(form.startAt)}}
-			{{form_row(form.endAt)}}
+			{{ form_row(form.type) }}
+			{{ form_row(form.status) }}
+		</div>
+
+		{{ form_row(form.title) }}
+		{{ form_row(form.description) }}
+	</div>
+
+	<div class="form-section">
+		<h3>Planification</h3>
+
+		{{ form_row(form.staffMember) }}
+
+		<div class="form-group">
+			<div class="checkbox">
+				{{ form_widget(form.allDay) }}
+				{{ form_label(form.allDay) }}
+				{{ form_errors(form.allDay) }}
+			</div>
+
+			<div class="form-row event-dates">
+				{{ form_row(form.startAt) }}
+				{{ form_row(form.endAt) }}
+			</div>
 		</div>
 	</div>
-	{{form_row(form.dossier)}}
-	{{form_row(form.calendar)}}
 
-	<div class="form-row">
-		{{form_row(form.createdAt)}}
-		{{form_row(form.updatedAt)}}
+	<div class="form-section">
+		<h3>Rattachement</h3>
+
+		<div class="form-row">
+			{{ form_row(form.dossier) }}
+			{{ form_row(form.calendar) }}
+		</div>
 	</div>
 
-	<button type="submit">
-		<i class="fa-regular fa-save"></i>Enregistrer
-	</button>
+	<div class="form-actions">
+		<button type="submit">
+			<i class="fa-regular fa-save"></i>
+			Enregistrer
+		</button>
+	</div>
 
 	{{ form_end(form) }}
-
 {% endblock %}

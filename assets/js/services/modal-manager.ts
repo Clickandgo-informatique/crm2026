@@ -1,5 +1,5 @@
 export class ModalManager {
-    public static open(content: string): void {
+    public static open(content: string, title: string = "Fenêtre"): void {
         let modal = document.querySelector("#app-modal");
 
         if (!modal) {
@@ -11,15 +11,33 @@ export class ModalManager {
         }
 
         modal.innerHTML = `
-            <div class="modal-overlay">
-                <div class="modal-content">
-                    <button class="modal-close" type="button">
-                        ×
-                    </button>
-                    ${content}
-                </div>
+    <div class="modal-overlay">
+        <div
+            class="modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+        >
+            <header class="modal-header">
+                <h2 class="modal-title" id="modal-title">
+                    ${title}
+                </h2>
+
+                <button
+                    class="modal-close"
+                    type="button"
+                    aria-label="Fermer"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </header>
+
+            <div class="modal-body">
+                ${content}
             </div>
-        `;
+        </div>
+    </div>
+`;
 
         modal.classList.add("is-open");
 
