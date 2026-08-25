@@ -8,6 +8,7 @@
 @import "./sidebar.css";
 @import "./planning/resources.css";
 @import "./variables.css";
+@import "./modal.css";
 
 * {
     margin: 0;

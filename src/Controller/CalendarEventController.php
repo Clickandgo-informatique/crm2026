@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class CalendarEventController extends AbstractController
 {
-    #[Route('/calendar/event/new', name: 'calendar_event_new')]
+    #[Route('/calendar/event/new', name: 'calendar_event_new',methods:['GET','POST'])]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(CalendarEventType::class);
@@ -24,6 +24,6 @@ final class CalendarEventController extends AbstractController
             $em->persist($event);
             $em->flush();
         }
-        return $this->render('calendar_event/edit.html.twig', []);
+        return $this->render('calendar_event/_form.html.twig', ['form' => $form->createView()]);
     }
 }

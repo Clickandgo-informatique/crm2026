@@ -1,3 +1,5 @@
+import { ModalManager } from "../../services/modal-manager";
+
 export class CalendarInteractionManager {
     public initialize(container: HTMLElement): void {
         console.log("Interaction manager initialized");
@@ -23,8 +25,21 @@ export class CalendarInteractionManager {
         }
     }
 
-    private onSlotClick(slot: HTMLElement): void {
-        console.log("Slot", slot.dataset.date, slot.dataset.time);
+    private async onSlotClick(slot: HTMLElement): Promise<void> {
+        const date = slot.dataset.date;
+        const time = slot.dataset.time;
+
+        const response = await fetch("/calendar/event/new");
+
+        if (!response.ok) {
+            throw new Error("Impossible de charger le formulaire événement");
+        }
+
+        const html = await response.text();
+
+        ModalManager.open(html);
+
+        console.log("Slot", date, time);
     }
 
     private onEventClick(event: HTMLElement): void {

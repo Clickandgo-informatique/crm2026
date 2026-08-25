@@ -1,0 +1,41 @@
+{% block title %}ClickandGo : Nouvel événement
+{% endblock %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+	<div class="form-row">
+		{{form_row(form.type)}}
+		{{form_row(form.status)}}
+	</div>
+
+	{{form_row(form.title)}}
+	{{form_row(form.description)}}
+	{{form_row(form.staffMember)}}
+
+	<div class="form-group">
+		<div class="checkbox">
+			{{ form_widget(form.allDay) }}
+			{{ form_label(form.allDay) }}
+			{{ form_errors(form.allDay) }}
+		</div>
+		<div class="form-row">
+			{{form_row(form.startAt)}}
+			{{form_row(form.endAt)}}
+		</div>
+	</div>
+	{{form_row(form.dossier)}}
+	{{form_row(form.calendar)}}
+
+	<div class="form-row">
+		{{form_row(form.createdAt)}}
+		{{form_row(form.updatedAt)}}
+	</div>
+
+	<button type="submit">
+		<i class="fa-regular fa-save"></i>Enregistrer
+	</button>
+
+	{{ form_end(form) }}
+
+{% endblock %}
